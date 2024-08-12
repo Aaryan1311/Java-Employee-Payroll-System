@@ -1,5 +1,22 @@
 import java.util.ArrayList;
 
+public class Main{
+    public static void main(String[] args) {
+        PayrollSystem payrollSystem = new PayrollSystem();
+        FullTimeEmployee aniket = new FullTimeEmployee("aniket", 1001, 100000);
+        FullTimeEmployee pranjal = new FullTimeEmployee("pranjal", 1002, 100001);
+        PartTimeEmployee naman = new PartTimeEmployee("naman",2001, 8000, 280);
+        payrollSystem.addEmployee(naman);
+        payrollSystem.addEmployee(aniket);
+        payrollSystem.addEmployee(pranjal);
+        payrollSystem.removeEmployee(2001);
+
+        payrollSystem.displayEmployeeList();
+
+    }
+}
+
+
 abstract class Employee{
 
     // access modifer
@@ -72,6 +89,7 @@ class PartTimeEmployee extends Employee{
 }
 
 // make payroll system
+
 class PayrollSystem{
 
     // list of employees
@@ -85,18 +103,33 @@ class PayrollSystem{
     // adding employee in list
     public void addEmployee(Employee employee){
         employeeList.add(employee);
+        System.out.println(employee.getName() + " of id " + employee.getId() + " has been added");
     }
 
+    // removing employee from list
     public void removeEmployee(int id){
-         
+         Employee employeetoRemove = null;
+         for(Employee employee : employeeList){
+            if(employee.getId() == id){
+                employeetoRemove = employee;
+                break;
+            }
+         }
+        if(employeetoRemove != null){
+            employeeList.remove(employeetoRemove);
+            System.out.println("Employee has been kicked out of the company");
+            return;  
+        }
+        else{
+            System.out.println("No Employee with this id.");
+            return;
+        }
     }
 
-}
-
-
-
-public class Main{
-    public static void main(String[] args) {
-        System.out.println("Hello world");
+//print list of employees
+    public void displayEmployeeList(){
+        for(Employee employee : employeeList){
+            System.out.println("[name = " + employee.getId() + ", id =  " + employee.getName() + ", salary = " + employee.calculateSalary() + "]");
+        }
     }
-}
+} 
